@@ -1,0 +1,6 @@
+applicationType: default
+defaultPackage: com.kugmax.learn.kafka
+testFramework: junit
+sourceLanguage: kotlin
+buildTool: gradle
+features: [annotation-api, app-name, gradle, http-client, jax-rs, junit, kafka, kotlin, kotlin-application, logback, management, micrometer, micrometer-appoptics, netty-server, readme, shade, yaml]

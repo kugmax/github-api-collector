@@ -1,0 +1,11 @@
+micronaut:
+  application:
+    name: githubApiCollector
+  metrics:
+    enabled: true
+    export:
+      appoptics:
+        enabled: true
+        apiToken: ${APPOPTICS_API_TOKEN}
+        step: PT1M
+kafka.bootstrap.servers: localhost:9092
