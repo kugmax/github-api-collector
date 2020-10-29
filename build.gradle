@@ -33,8 +33,6 @@ dependencies {
     implementation("javax.annotation:javax.annotation-api")
     implementation("io.micronaut:micronaut-http-client")
     implementation("io.micronaut:micronaut-management")
-    implementation("io.micronaut.micrometer:micronaut-micrometer-core")
-    implementation("io.micronaut.micrometer:micronaut-micrometer-registry-appoptics")
     implementation("io.micronaut.kafka:micronaut-kafka")
     implementation("io.micronaut.jaxrs:micronaut-jaxrs-server")
     runtimeOnly("ch.qos.logback:logback-classic")
