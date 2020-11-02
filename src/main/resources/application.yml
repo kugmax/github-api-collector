@@ -2,3 +2,4 @@ micronaut:
   application:
     name: githubApiCollector
 kafka.bootstrap.servers: localhost:9092
+github.api.events.url: https://api.github.com/events
