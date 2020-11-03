@@ -1,4 +1,4 @@
-## Set up kafka
+## Setup kafka
 `docker-compose up -d`
 
 ## Build
