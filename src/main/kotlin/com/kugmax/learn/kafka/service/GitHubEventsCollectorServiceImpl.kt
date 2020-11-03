@@ -17,10 +17,9 @@ class GitHubEventsCollectorServiceImpl : GitHubEventsCollector {
 
     override fun collectEvents() {
         val eventsResource = client.getEvents()
-        println(eventsResource)
+//        println(eventsResource)
 
         val eventsModel = eventsResource.map { GitHubEvent(it.id, it.type, it.actor.id, it.actor.url, it.repo.id, it.repo.url, it.createdAt) }
-
         producer.push(eventsModel)
     }
 }

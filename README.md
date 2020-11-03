@@ -1,16 +1,11 @@
-## Feature http-client documentation
+## Build
+`./gradlew build`
 
-- [Micronaut Micronaut HTTP Client documentation](https://docs.micronaut.io/latest/guide/index.html#httpClient)
+## Run
+`./gradlew run`
 
-## Feature management documentation
+## API
+GET http://localhost:8080/api - if OK, returns nothing
 
-- [Micronaut Micronaut Management documentation](https://docs.micronaut.io/latest/guide/index.html#management)
-
-## Feature jax-rs documentation
-
-- [Micronaut JAX-RS support documentation](https://micronaut-projects.github.io/micronaut-jaxrs/latest/guide/index.html)
-
-## Feature kafka documentation
-
-- [Micronaut Kafka Messaging documentation](https://micronaut-projects.github.io/micronaut-kafka/latest/guide/index.html)
-
+## File name
+`github-events.txt`
