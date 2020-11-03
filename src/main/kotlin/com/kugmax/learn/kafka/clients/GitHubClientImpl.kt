@@ -1,6 +1,5 @@
 package com.kugmax.learn.kafka.clients
 
-import com.kugmax.learn.kafka.model.GitHubEvent
 import io.micronaut.context.annotation.Value
 import okhttp3.OkHttpClient
 import okhttp3.Request
