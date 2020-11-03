@@ -3,3 +3,9 @@ micronaut:
     name: githubApiCollector
 kafka.bootstrap.servers: localhost:9092
 github.api.events.url: https://api.github.com/events
+
+kafka.topic.github.events: github-events-1
+kafka.consumer.group.github.events.getall: getall-consuumer
+kafka.consumer.group.github.events.filter: filter-consumer
+
+github.events.file: github-events.txt

@@ -1,11 +1,7 @@
 package com.kugmax.learn.kafka.producer
 
-import org.apache.kafka.clients.producer.Producer
-import javax.inject.Inject
-import javax.inject.Singleton
+import com.kugmax.learn.kafka.model.GitHubEvent
 
-@Singleton
-class GitHubEventProducer {
-    @Inject
-    lateinit var producer: Producer<String, String>
+interface GitHubEventProducer {
+    fun push(events: List<GitHubEvent>)
 }
