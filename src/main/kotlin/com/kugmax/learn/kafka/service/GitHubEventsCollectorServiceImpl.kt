@@ -1,8 +1,8 @@
 package com.kugmax.learn.kafka.service
 
 import com.kugmax.learn.kafka.clients.GitHubClient
+import com.kugmax.learn.kafka.model.GitHubEvent
 import com.kugmax.learn.kafka.producer.GitHubEventProducer
-import com.kugmax.learn.kafka.producer.GitHubEventProducerImpl
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -16,8 +16,11 @@ class GitHubEventsCollectorServiceImpl : GitHubEventsCollector {
     lateinit var client: GitHubClient
 
     override fun collectEvents() {
-        val events = client.getEvents()
-//        println(events)
-        producer.push(events)
+        val eventsResource = client.getEvents()
+        println(eventsResource)
+
+        val eventsModel = eventsResource.map { GitHubEvent(it.id, it.type, it.actor.id, it.actor.url, it.repo.id, it.repo.url, it.createdAt) }
+
+        producer.push(eventsModel)
     }
 }

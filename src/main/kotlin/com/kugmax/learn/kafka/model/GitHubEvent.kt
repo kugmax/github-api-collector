@@ -6,5 +6,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 data class GitHubEvent (
         val id: String,
         val type: String,
-        val public: String
+        val actorId: String,
+        val actorUrl: String,
+        val repoId: String,
+        val repoUrl: String,
+        val createdAt: String,
 )

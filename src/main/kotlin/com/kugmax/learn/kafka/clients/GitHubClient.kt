@@ -1,7 +1,7 @@
 package com.kugmax.learn.kafka.clients
 
-import com.kugmax.learn.kafka.model.GitHubEvent
+import com.kugmax.learn.kafka.resource.GitHubEventResource
 
 interface GitHubClient {
-    fun getEvents() : List<GitHubEvent>
+    fun getEvents() : List<GitHubEventResource>
 }
