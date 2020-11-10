@@ -1,3 +1,6 @@
+## Setup kafka
+`docker-compose up -d`
+
 ## Build
 `./gradlew build`
 
