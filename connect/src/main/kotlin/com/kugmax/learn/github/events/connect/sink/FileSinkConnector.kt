@@ -4,7 +4,6 @@ import org.apache.kafka.common.config.ConfigDef
 import org.apache.kafka.connect.connector.Task
 import org.apache.kafka.connect.sink.SinkConnector
 import org.apache.kafka.common.utils.AppInfoParser
-import org.apache.kafka.connect.util.ConnectorUtils
 
 class FileSinkConnector : SinkConnector() {
     private var fileName = ""
@@ -15,7 +14,6 @@ class FileSinkConnector : SinkConnector() {
 
     override fun taskConfigs(maxTasks: Int): MutableList<MutableMap<String, String>> {
         val configs = mutableListOf<MutableMap<String, String>>()
-
 
 //        for (i in 0 until numGroups) {
             val config = mutableMapOf<String, String>()
