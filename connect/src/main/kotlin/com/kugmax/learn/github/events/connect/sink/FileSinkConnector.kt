@@ -15,11 +15,11 @@ class FileSinkConnector : SinkConnector() {
     override fun taskConfigs(maxTasks: Int): MutableList<MutableMap<String, String>> {
         val configs = mutableListOf<MutableMap<String, String>>()
 
-//        for (i in 0 until numGroups) {
+        for (i in 0 until maxTasks) {
             val config = mutableMapOf<String, String>()
             config[FILE_NAME] = fileName
             configs.add(config)
-//        }
+        }
 
         return configs
     }

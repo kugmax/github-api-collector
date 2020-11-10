@@ -19,7 +19,6 @@ class FileSinkTask: SinkTask() {
     }
 
     override fun stop() {
-
     }
 
     override fun put(records: MutableCollection<SinkRecord>) {
