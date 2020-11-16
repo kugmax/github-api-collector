@@ -38,7 +38,7 @@ class FilterGitHubEventsConsumer(
             consumer.subscribe(listOf(topic))
             while (true) {
                 val records: ConsumerRecords<String, String>? = consumer.poll(Duration.ofSeconds(3))
-                println("FilterGitHubEventsConsumer poll " + records?.count())
+//                println("FilterGitHubEventsConsumer poll " + records?.count())
                 records?.forEach { process(it) }
             }
         } catch (e: Exception) {

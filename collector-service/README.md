@@ -8,7 +8,7 @@
 `./gradlew run`
 
 ## API
-GET http://localhost:8080/api - if OK, returns nothing
+GET http://localhost:9191/api - if OK, returns nothing
 
 ## File name
 `github-events.txt`

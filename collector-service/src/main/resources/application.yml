@@ -1,10 +1,15 @@
 micronaut:
   application:
     name: githubApiCollector
+  server:
+    port: 9191
 kafka.bootstrap.servers: localhost:9092
 github.api.events.url: https://api.github.com/events
 
-kafka.topic.github.events: github-events-1
+kafka.topic.github.events: GithubEvents
+kafka.topic.github.events.push: GithubPushEvents
+kafka.topic.github.events.agregate: GithubEventAggregates
+
 kafka.consumer.group.github.events.getall: getall-consuumer
 kafka.consumer.group.github.events.filter: filter-consumer
 

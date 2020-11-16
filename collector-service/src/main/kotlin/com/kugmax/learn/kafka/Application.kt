@@ -2,6 +2,7 @@ package com.kugmax.learn.kafka
 
 import com.kugmax.learn.kafka.consumer.FileGitHubEventsConsumer
 import com.kugmax.learn.kafka.consumer.FilterGitHubEventsConsumer
+import com.kugmax.learn.kafka.streams.GitHubEventsFilterStream
 import io.micronaut.context.annotation.Factory
 import io.micronaut.context.annotation.Value
 import io.micronaut.runtime.Micronaut.build
@@ -10,6 +11,7 @@ import org.apache.kafka.clients.consumer.KafkaConsumer
 import org.apache.kafka.clients.producer.KafkaProducer
 import org.apache.kafka.clients.producer.Producer
 import org.apache.kafka.clients.producer.ProducerConfig
+import org.apache.kafka.streams.StreamsConfig
 import java.util.*
 import javax.inject.Singleton
 
@@ -34,6 +36,12 @@ internal class KafkaFactory {
 
 	@Value("\${kafka.topic.github.events}")
 	lateinit var topic: String
+
+	@Value("\${kafka.topic.github.events.push}")
+	lateinit var pushEventsTopic: String
+
+	@Value("\${kafka.topic.github.events.agregate}")
+	lateinit var pushEventsAgregate: String
 
 	@Value("\${github.events.file}")
 	lateinit var fileName: String
@@ -71,6 +79,19 @@ internal class KafkaFactory {
 		consumer.start()
 
 		return consumer
+	}
+
+	@Singleton
+	fun filterStream(): GitHubEventsFilterStream {
+		val props = getBaseProps()
+		props[StreamsConfig.APPLICATION_ID_CONFIG] = "github-events-kafka-stream"
+//		props[StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG] = Serdes.String().javaClass
+//		props[StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG] = Serdes.String().javaClass
+
+		val stream = GitHubEventsFilterStream(topic, pushEventsTopic, "PushEvent", props)
+		stream.start()
+
+		return stream
 	}
 
 	private fun getBaseProps() : Properties {

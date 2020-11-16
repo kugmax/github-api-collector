@@ -35,11 +35,15 @@ dependencies {
     implementation("io.micronaut:micronaut-management")
     implementation("io.micronaut.jaxrs:micronaut-jaxrs-server")
     implementation('org.apache.kafka:kafka-clients:2.6.0')
+    implementation('org.apache.kafka:kafka-streams:2.6.0')
+//    implementation("io.micronaut.kafka:micronaut-kafka-streams")
     implementation('com.squareup.okhttp3:okhttp:3.8.1')
     implementation('com.fasterxml.jackson.module:jackson-module-kotlin:2.11.3')
 
     runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
+
+    testCompile 'org.apache.kafka:kafka-streams-test-utils:2.6.0'
 }
 
 mainClassName = "com.kugmax.learn.kafka.ApplicationKt"
