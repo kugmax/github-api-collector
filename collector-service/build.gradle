@@ -44,6 +44,7 @@ dependencies {
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
 
     testCompile 'org.apache.kafka:kafka-streams-test-utils:2.6.0'
+    testCompile "org.assertj:assertj-core:3.11.1"
 }
 
 mainClassName = "com.kugmax.learn.kafka.ApplicationKt"

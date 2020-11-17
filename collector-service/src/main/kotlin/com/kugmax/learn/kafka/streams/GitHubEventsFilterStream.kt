@@ -4,10 +4,10 @@ import com.kugmax.learn.kafka.model.GitHubEvent
 import org.apache.kafka.common.serialization.Serdes
 import org.apache.kafka.streams.KafkaStreams
 import org.apache.kafka.streams.StreamsBuilder
+import org.apache.kafka.streams.Topology
 import org.apache.kafka.streams.kstream.Consumed
 import org.apache.kafka.streams.kstream.KStream
 import java.util.*
-
 
 class GitHubEventsFilterStream(
         val fromTopic: String,
@@ -16,6 +16,16 @@ class GitHubEventsFilterStream(
         val props: Properties) {
 
     fun start() {
+        val streams = KafkaStreams(buildTopology(), props)
+
+        println("Starting streams...")
+        streams.start()
+        println("Streams started!")
+
+        Runtime.getRuntime().addShutdownHook(Thread { streams.close() })
+    }
+
+    fun buildTopology() : Topology {
         val builder = StreamsBuilder();
 
         val messages: KStream<String, GitHubEvent> = builder.stream(fromTopic,
@@ -33,12 +43,6 @@ class GitHubEventsFilterStream(
 
         println("Filter topology: ${topology.describe()}")
 
-        val streams = KafkaStreams(topology, props)
-
-        println("Starting streams...")
-        streams.start()
-        println("Streams started!")
-
-        Runtime.getRuntime().addShutdownHook(Thread { streams.close() })
+        return topology
     }
 }
