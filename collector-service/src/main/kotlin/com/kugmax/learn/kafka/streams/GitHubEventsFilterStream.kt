@@ -21,7 +21,7 @@ class GitHubEventsFilterStream(
         val messages: KStream<String, GitHubEvent> = builder.stream(fromTopic,
                 Consumed.with(
                         Serdes.String(),
-                        Serdes.serdeFrom(JsonPOJOSerializer(), JsonPOJODeserializer())
+                        Serdes.serdeFrom(JsonPOJOSerializer(), JsonPOJODeserializer(GitHubEvent::class.java))
                 )
         )
 

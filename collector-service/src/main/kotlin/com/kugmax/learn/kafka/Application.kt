@@ -3,6 +3,7 @@ package com.kugmax.learn.kafka
 import com.kugmax.learn.kafka.consumer.FileGitHubEventsConsumer
 import com.kugmax.learn.kafka.consumer.FilterGitHubEventsConsumer
 import com.kugmax.learn.kafka.streams.GitHubEventsFilterStream
+import com.kugmax.learn.kafka.streams.GithubEventAggregatesStream
 import io.micronaut.context.annotation.Factory
 import io.micronaut.context.annotation.Value
 import io.micronaut.runtime.Micronaut.build
@@ -12,6 +13,8 @@ import org.apache.kafka.clients.producer.KafkaProducer
 import org.apache.kafka.clients.producer.Producer
 import org.apache.kafka.clients.producer.ProducerConfig
 import org.apache.kafka.streams.StreamsConfig
+import org.apache.kafka.streams.processor.WallclockTimestampExtractor
+import java.time.Duration
 import java.util.*
 import javax.inject.Singleton
 
@@ -45,6 +48,9 @@ internal class KafkaFactory {
 
 	@Value("\${github.events.file}")
 	lateinit var fileName: String
+
+	@Value("\${github.events.pushEvents.aggregate.window.size.minutes}")
+	var windowSizeMinutes: Long? = null
 
 	@Singleton
 	fun kafkaProducer() : Producer<String, String> {
@@ -84,11 +90,22 @@ internal class KafkaFactory {
 	@Singleton
 	fun filterStream(): GitHubEventsFilterStream {
 		val props = getBaseProps()
-		props[StreamsConfig.APPLICATION_ID_CONFIG] = "github-events-kafka-stream"
-//		props[StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG] = Serdes.String().javaClass
-//		props[StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG] = Serdes.String().javaClass
+		props[StreamsConfig.APPLICATION_ID_CONFIG] = "github-events-kafka-stream-filter"
 
 		val stream = GitHubEventsFilterStream(topic, pushEventsTopic, "PushEvent", props)
+		stream.start()
+
+		return stream
+	}
+
+	@Singleton
+	fun aggregateStream(): GithubEventAggregatesStream {
+		val props = getBaseProps()
+		props[StreamsConfig.APPLICATION_ID_CONFIG] = "github-events-kafka-stream-aggregate"
+		props[StreamsConfig.DEFAULT_TIMESTAMP_EXTRACTOR_CLASS_CONFIG] = WallclockTimestampExtractor::class.java
+		props[StreamsConfig.REPLICATION_FACTOR_CONFIG] = 1
+
+		val stream = GithubEventAggregatesStream(pushEventsTopic, pushEventsAgregate, Duration.ofMinutes(windowSizeMinutes!!), props)
 		stream.start()
 
 		return stream

@@ -14,3 +14,5 @@ kafka.consumer.group.github.events.getall: getall-consuumer
 kafka.consumer.group.github.events.filter: filter-consumer
 
 github.events.file: github-events.txt
+
+github.events.pushEvents.aggregate.window.size.minutes: 1

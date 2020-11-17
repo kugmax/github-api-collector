@@ -6,17 +6,13 @@ import org.apache.kafka.common.errors.SerializationException
 import org.apache.kafka.common.serialization.Deserializer
 
 
-class JsonPOJODeserializer : Deserializer<GitHubEvent> {
-
+class JsonPOJODeserializer<T>(private var tClass: Class<T>) : Deserializer<T>{
     private val objectMapper = jacksonObjectMapper()
-    private var tClass: Class<GitHubEvent> = GitHubEvent::class.java
+
     override fun configure(props: Map<String?, *>, isKey: Boolean) {}
 
-    override fun deserialize(topic: String, bytes: ByteArray): GitHubEvent {
-//        println("###########################################################")
-//        println(String(bytes))
-
-        val data: GitHubEvent
+    override fun deserialize(topic: String, bytes: ByteArray): T {
+        val data: T
         data = try {
             objectMapper.readValue(bytes, tClass)
         } catch (e: Exception) {
