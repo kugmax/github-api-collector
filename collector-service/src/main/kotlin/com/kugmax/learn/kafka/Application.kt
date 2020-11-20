@@ -104,6 +104,7 @@ internal class KafkaFactory {
 		props[StreamsConfig.APPLICATION_ID_CONFIG] = "github-events-kafka-stream-aggregate"
 		props[StreamsConfig.DEFAULT_TIMESTAMP_EXTRACTOR_CLASS_CONFIG] = WallclockTimestampExtractor::class.java
 		props[StreamsConfig.REPLICATION_FACTOR_CONFIG] = 1
+		props[StreamsConfig.NUM_STREAM_THREADS_CONFIG] = 1
 
 		val stream = GithubEventAggregatesStream(pushEventsTopic, pushEventsAgregate, Duration.ofMinutes(windowSizeMinutes!!), props)
 		stream.start()

@@ -55,8 +55,8 @@ class GitHubEventsFilterStreamTest {
         inputTopic.pipeInput("4", GitHubEvent("4", "PushEvent", "a4", "url4", "r4", "url4", "time4"))
 
         assertThat(outputTopic.readKeyValuesToList()).contains(
-                KeyValue("3", GitHubEvent("3", "PushEvent", "a3", "url3", "r3", "url3", "time3")),
-                KeyValue("4", GitHubEvent("4", "PushEvent", "a4", "url4", "r4", "url4", "time4"))
+                KeyValue("PushEvent", GitHubEvent("3", "PushEvent", "a3", "url3", "r3", "url3", "time3")),
+                KeyValue("PushEvent", GitHubEvent("4", "PushEvent", "a4", "url4", "r4", "url4", "time4"))
         )
     }
 }

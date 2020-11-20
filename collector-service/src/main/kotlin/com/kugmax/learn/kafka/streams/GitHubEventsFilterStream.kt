@@ -7,6 +7,7 @@ import org.apache.kafka.streams.StreamsBuilder
 import org.apache.kafka.streams.Topology
 import org.apache.kafka.streams.kstream.Consumed
 import org.apache.kafka.streams.kstream.KStream
+import org.apache.kafka.streams.kstream.Produced
 import java.util.*
 
 class GitHubEventsFilterStream(
@@ -37,7 +38,11 @@ class GitHubEventsFilterStream(
 
         messages
                 .filter{ _, event -> filterType == event.type}
-                .to(toTopic)
+                .selectKey{key, value -> value.type}
+                .to(toTopic, Produced.with(
+                        Serdes.String(),
+                        Serdes.serdeFrom(JsonPOJOSerializer<GitHubEvent>(), JsonPOJODeserializer(GitHubEvent::class.java))
+                ))
 
         val topology = builder.build()
 

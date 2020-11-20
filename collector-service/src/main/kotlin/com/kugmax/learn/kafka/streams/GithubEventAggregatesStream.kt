@@ -11,7 +11,6 @@ import org.apache.kafka.streams.kstream.*
 import org.apache.kafka.streams.kstream.Suppressed.BufferConfig.unbounded
 import java.time.Duration
 import java.time.Instant
-import java.time.temporal.ChronoUnit
 import java.util.*
 
 class GithubEventAggregatesStream(val fromTopic: String,
@@ -39,9 +38,8 @@ class GithubEventAggregatesStream(val fromTopic: String,
         )
 
         messages
-//                .map{ key, value -> KeyValue<String, String>(Instant.parse(key).truncatedTo(ChronoUnit.MINUTES).toString(), value.id) }
                 .groupByKey()
-                .windowedBy(TimeWindows.of(windowSize).advanceBy(windowSize).grace(windowSize))
+                .windowedBy(TimeWindows.of(windowSize).grace(Duration.ZERO))
                 .count()
                 .suppress(Suppressed.untilWindowCloses(unbounded()))
                 .toStream()
